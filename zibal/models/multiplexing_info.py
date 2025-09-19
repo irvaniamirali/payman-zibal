@@ -1,13 +1,17 @@
-from pydantic import BaseModel, ConfigDict, conint, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 from pydantic.alias_generators import to_camel
+
+from .types import PositiveAmountType
 
 
 class MultiplexingInfo(BaseModel):
-    amount: conint(gt=0)
-    bank_account: str = None
-    sub_merchant_id: str = None
-    wallet_id: str = None
-    wage_payer: bool = None
+    amount: PositiveAmountType = Field(..., description="Amount to split")
+    bank_account: str | None = Field(None, description="Target bank account")
+    sub_merchant_id: str | None = Field(None, description="Sub-merchant identifier")
+    wallet_id: str | None = Field(None, description="Wallet identifier")
+    wage_payer: bool | None = Field(
+        None, description="If True, wage is paid by this target"
+    )
 
     @model_validator(mode="after")
     def at_least_one_target(cls, values):
