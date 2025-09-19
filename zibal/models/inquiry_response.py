@@ -2,25 +2,25 @@ from pydantic import BaseModel, Field, ConfigDict
 from pydantic.alias_generators import to_camel
 
 from .multiplexing_info import MultiplexingInfo
-
 from ..enums.result_code import ResultCode
 from ..enums.transaction_status import TransactionStatus
+from .types import PositiveAmountType
 
 
 class InquiryResponse(BaseModel):
-    result: ResultCode = Field(..., description="API Status code")
+    result: ResultCode = Field(..., description="API status code")
     message: str = Field(..., description="Status message")
-    ref_number: int = Field(None, description="Reference number")
-    paid_at: str = Field(None, description="Payment timestamp (ISO 8601)")
-    verified_at: str = Field(None, description="Verification timestamp")
-    status: TransactionStatus = Field(None, description="Payment status")
-    amount: int = Field(None, description="Transaction amount")
-    order_id: str = Field(..., description="Order ID")
+    ref_number: str | None = Field(None, description="Bank reference number")
+    paid_at: str | None = Field(None, description="Payment timestamp (ISO 8601)")
+    verified_at: str | None = Field(None, description="Verification timestamp")
+    status: TransactionStatus | None = Field(None, description="Payment status")
+    amount: PositiveAmountType | None = Field(None, description="Transaction amount")
+    order_id: str = Field(..., description="Merchant order ID")
     description: str = Field(..., description="Description of the transaction")
-    card_number: str = Field(None, description="Card number used for the transaction")
-    wage: int = Field(..., description="Wage associated with the transaction")
-    created_at: str = Field(..., description="Creation timestamp of the response")
-    multiplexingInfos: list[MultiplexingInfo] = []
+    card_number: str | None = Field(None, description="Masked card number")
+    wage: PositiveAmountType | None = Field(None, description="Transaction wage")
+    created_at: str = Field(..., description="Response creation timestamp")
+    multiplexing_infos: list[MultiplexingInfo] = Field(default_factory=list)
 
     model_config = ConfigDict(
         populate_by_name=True,
