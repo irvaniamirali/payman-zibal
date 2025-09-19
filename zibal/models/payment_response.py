@@ -5,9 +5,9 @@ from ..enums.result_code import ResultCode
 
 
 class PaymentResponse(BaseModel):
-    result: ResultCode = Field(None, description="Payment status code")
-    track_id: int = Field(None, description="Unique payment session ID")
-    message: str = Field(None, description="Result message")
+    result: ResultCode = Field(..., description="Payment status code")
+    track_id: int = Field(..., description="Unique payment session ID")
+    message: str = Field(..., description="Result message")
 
     model_config = ConfigDict(
         populate_by_name=True,
