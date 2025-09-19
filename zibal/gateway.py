@@ -17,7 +17,13 @@ class Zibal(Methods, GatewayInterface[PaymentRequest, PaymentResponse]):
 
     BASE_URL: ClassVar[str] = "https://gateway.zibal.ir"
 
-    def __init__(self, merchant_id: str, version: int = 1, **client_options):
+    def __init__(
+        self,
+        merchant_id: str,
+        version: int = 1,
+        http_client: AsyncHttpClient = None,
+        **client_options,
+    ):
         """Initialize Zibal client.
 
         Args:
@@ -37,10 +43,13 @@ class Zibal(Methods, GatewayInterface[PaymentRequest, PaymentResponse]):
         self.base_url = f"{self.BASE_URL}/v{version}"
         self.error_handler = zibal_error_mapper
 
+        if http_client is None:
+            http_client = AsyncHttpClient(base_url=self.base_url, **client_options)
+
         self.client = ZibalClient(
             merchant_id=self.merchant_id,
             base_url=self.base_url,
-            http_client=AsyncHttpClient(base_url=self.base_url, **client_options),
+            http_client=http_client,
             error_mapper=self.error_handler,
         )
 
