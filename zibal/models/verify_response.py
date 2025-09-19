@@ -11,13 +11,21 @@ class VerifyResponse(BaseModel):
     result: ResultCode = Field(..., description="Gateway response status code")
     message: str = Field(..., description="Result message")
     amount: PositiveAmountType | None = Field(None, description="Paid amount in Rial")
-    status: TransactionStatus | None = Field(None, description="Bank transaction status")
-    paid_at: str | None = Field(None, description="Payment timestamp in ISO 8601 format")
-    card_number: str | None = Field(None, description="Masked card number used for payment")
+    status: TransactionStatus | None = Field(
+        None, description="Bank transaction status"
+    )
+    paid_at: str | None = Field(
+        None, description="Payment timestamp in ISO 8601 format"
+    )
+    card_number: str | None = Field(
+        None, description="Masked card number used for payment"
+    )
     ref_number: str | None = Field(None, description="Bank reference number")
     order_id: str | None = Field(None, description="Merchant order ID")
     description: str | None = Field(None, description="Optional description")
-    track_id: TrackIdType | None = Field(None, description="Zibal transaction tracking ID")
+    track_id: TrackIdType | None = Field(
+        None, description="Zibal transaction tracking ID"
+    )
     multiplexing_infos: list[MultiplexingInfo] = Field(default_factory=list)
 
     model_config = ConfigDict(

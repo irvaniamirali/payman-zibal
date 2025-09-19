@@ -9,7 +9,9 @@ class MultiplexingInfo(BaseModel):
     bank_account: str | None = Field(None, description="Target bank account")
     sub_merchant_id: str | None = Field(None, description="Sub-merchant identifier")
     wallet_id: str | None = Field(None, description="Wallet identifier")
-    wage_payer: bool | None = Field(None, description="If True, wage is paid by this target")
+    wage_payer: bool | None = Field(
+        None, description="If True, wage is paid by this target"
+    )
 
     @model_validator(mode="after")
     def at_least_one_target(cls, values):
