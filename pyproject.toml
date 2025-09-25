@@ -1,6 +1,6 @@
 [project]
 name = "payman-zibal"
-version = "1.0.1"
+version = "1.0.3"
 description = "Zibal payment gateway plugin for Payman"
 readme = "README.md"
 requires-python = ">=3.13"
@@ -16,7 +16,7 @@ classifiers = [
 ]
 
 dependencies = [
-    "payman>=3.0.0",
+    "payman>=3.0.3",
 ]
 
 [build-system]
